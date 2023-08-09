@@ -7,7 +7,7 @@
 
 <div class="h-full">
 
-	<div class="container h-full flex flex-col mx-auto space-y-8 items-center justify-center">
+	<div class="container h-full flex flex-col mx-auto space-y-8 items-center justify-center pr-[360px]">
 		{#if form?.incorrect}<p class="error">Invalid credentials!</p>{/if}
 		{#if form?.success}
 			<!-- this message is ephemeral; it exists because the page was rendered in           response to a form submission. it will vanish if the user reloads -->

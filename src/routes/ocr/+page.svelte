@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData, ActionData } from './$types';
-	import { baseUiPath } from '$lib/vars';
+	import { baseUiPath, flows } from '$lib/vars';
 	export let data: PageData;
 	export let form: ActionData;
 	import { enhance } from '$app/forms';
@@ -8,12 +8,16 @@
 	import { ProgressRadial, FileDropzone } from '@skeletonlabs/skeleton';
 
 	const authorizedExtensions = ['.jpg', '.jpeg', '.png', '.webp'];
-	let processing = false;
+	$: processing = false;    
+	console.log(data);
+	flows.set(data.flows);
+	console.log("flows populated with " + data.flows + " flows");
+
 </script>
 
-<div class="container h-full mx-auto flex flex-col justify-center items-center">
-	<div class="py-12 flex flex-col justify-center items-center text-center">
-		<i class="fas fa-eye text-7xl pb-12" />
+<div class="container px-24 h-full mx-auto flex flex-col justify-start items-start pr-[360px]">
+	<div class="py-6 flex flex-col justify-start items-start text-left w-full space-y-4">
+		<i class="fas fa-eye text-7xl pb-6 justify-self-center place-self-center" />
 		<h1>Tesseract optical character recognition</h1>
 		<h3 class="font-bold text-primary-600-300-token">Upload a file to start</h3>
 		<a href="/ocr/description"
@@ -24,20 +28,20 @@
 	<div class="space-y-5 w-full">
 		{#if form?.success}
 			<div in:fly={{ y: 20 }} class="space-y-4 border-b-2 pb-16 border-surface-100-800-token">
-				<h2 class="font-bold text-green-400">Execution successful!</h2>
+				<h3 class="font-bold text-success-500-400-token bg-success-50-900-token p-4">Execution successful!</h3>
 				<div>Here is your output</div>
 				<pre>{form?.node.outputs.out.data}</pre>
 
 				<p class="font-bold text-lg">Uploaded file</p>
 				<ul class="list">
 					{#each form?.asset_node.files as file}
-						<li class="flex flex-col justify-start content-start">
+						<li class="flex flex-row justify-start content-start">
 							<img
 								src="https://sos-de-fra-1.exo.io/aithericon-trial/nodes/{form.asset_node
 									.id}/{file.name}"
 								class="w-[256px]"
 							/>
-							<p>{file.name}</p>
+							<p class="font-bold">{file.name}</p>
 						</li>
 					{/each}
 				</ul>
@@ -51,7 +55,7 @@
 			class="space-y-4"
 			use:enhance={() => {
 				processing = true;
-
+				console.log("processing");
 				return async ({ update }) => {
 					await update();
 					processing = false;

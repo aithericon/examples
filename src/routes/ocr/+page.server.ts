@@ -30,16 +30,16 @@ export const load = (async ({ cookies }) => {
         project = projects.data.projects.pop();
     }
 
-    console.log(project);
-    let flows = await list_series(`projects/${project.id}`, token);
+    
+    let flow_req = await list_series(`projects/${project.id}`, token);
+
+    
     current_project = project;
 
-    console.log("graaaaaaaaa");
-    console.log(project);
     return {
         user: user,
         project: project,
-        flows: flows.data.series
+        flows: flow_req.data.series
     }
 }) satisfies PageServerLoad;
 
@@ -66,7 +66,7 @@ export const actions = {
         asset_node.name = formData.fileToUpload.name;
         let created_asset_node = (await create_node(asset_node, token)).data;
         let newFormData = new FormData();
-        newFormData.append('file1', fileToUpload, 'test.png');
+        newFormData.append('file1', fileToUpload, fileToUpload.name);
 
         axios.post(`https://dev.aithericon.com/upload/nodes?${created_asset_node.id}`, newFormData, {
             headers: {

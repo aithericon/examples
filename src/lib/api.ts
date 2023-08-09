@@ -46,7 +46,7 @@ export async function list_series(parent: string, token: string) {
                 baseOptions: config
             }
         ));
-    let res = await project_api.apiListSeries(parent, 5, "<created/0");
+    let res = await project_api.apiListSeries(parent, 20, "<created/0");
     return res;
 }
 
@@ -64,6 +64,23 @@ export async function create_flow(flow: aithericon_api.AgridosSerie, token: stri
             }
         ));
     let res = await flow_api.apiCreateSerie({parent: `projects/${flow.projectId}`, serie: flow});
+    return res;
+}
+
+export async function get_flow(id: string, token: string): Promise<AxiosResponse<aithericon_api.AgridosSerie, any>>  {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+    let flow_api = new aithericon_api.FlowApi(
+        new aithericon_api.Configuration(
+            {
+                basePath: basePath,
+                accessToken: token,
+                apiKey: token,
+                baseOptions: config
+            }
+        ));
+    let res = await flow_api.apiGetSerie(id);
     return res;
 }
 
@@ -117,6 +134,24 @@ export async function create_node(node: aithericon_api.AgridosNode, token: strin
     let res = await node_api.apiCreateNode({parent: node.serieId, node: node});
     return res;
 }
+
+export async function list_nodes(parent: string, page_size: number, page_token: string, filter: string, token: string) {
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+    let project_api = new aithericon_api.NodeApi(
+        new aithericon_api.Configuration(
+            {
+                basePath: basePath,
+                accessToken: token,
+                apiKey: token,
+                baseOptions: config
+            }
+        ));
+    let res = await project_api.apiListNodes(parent, page_size, page_token, filter);
+    return res;
+}
+
 
 
 export async function execute_node(node, token: string) {

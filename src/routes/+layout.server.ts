@@ -16,7 +16,6 @@ export const load = (async ({ cookies }) => {
     // const user = await db.getUserFromSession(cookies.get('sessionid'));
     let user = "undefined"
     let token = cookies.get('auth_token');
-    console.log();
     if (page.path === '/login') {
         return { user: user }
     }
