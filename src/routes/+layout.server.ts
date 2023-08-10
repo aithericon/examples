@@ -12,20 +12,21 @@ import { page } from '$app/stores';
 
 let current_flow: AgridosSerie | undefined = undefined;
 
-export const load = (async ({ cookies }) => {
+export const load = (async ({ route, cookies }) => {
     // const user = await db.getUserFromSession(cookies.get('sessionid'));
     let user = "undefined"
     let token = cookies.get('auth_token');
-    if (page.path === '/login') {
+    console.log(route);
+    if (route.id === '/login') {
         return { user: user }
     }
     if (token == undefined) {
-        return { user: user }
+        throw redirect(303, '/login');
     }
 
     let res = await validate_token(token).catch((err) => {
         console.log(err.response.message);
-        // throw redirect(303, '/login');
+        throw redirect(303, '/login');
         return { data: { user: "Not logged in" } }
     });
     user = res.data.user;

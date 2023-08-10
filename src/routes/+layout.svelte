@@ -17,7 +17,7 @@
 
 	let icon = 'https://aithericon.com/logo.png';
 	let app_names = {
-		'': 'Aithericon',
+		'': 'Aithericon Example Applications',
 		login: 'Login',
 		simple: 'Simple',
 		files: 'Files',
@@ -55,7 +55,7 @@
 				</AppRailAnchor>
 				<!-- --- -->
 				<svelte:fragment slot="trail">
-					<AppRailAnchor href="/" title="Account"
+					<AppRailAnchor href="https://github.com/aithericon/examples" title="Account"
 						><i class="fa-brands fa-github text-2xl" /></AppRailAnchor
 					>
 				</svelte:fragment>
